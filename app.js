@@ -1,270 +1,97 @@
 'use strict';
-let seatle = {
-    min : 23 ,
-    max : 65 ,
-    random : 0 ,
-    hours:['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'],
-    amount:[],
-    totalAvg:0,
-    avgCockiesPerSale : 6.3 ,
-    //to calculate the amount of every cockies per hour and saving it on amount array
-    amountCockiesPerHour:function(average,random){
-        average=this.avgCockiesPerSale;
-        for(let i=0;i<this.hours.length;i++){
-            this.getRandom(this.min,this.max);
-            random=this.random;
-            this.amount[i]= Math.ceil(average*random); 
-            this.totalAvg=this.totalAvg+this.amount[i];
-        }
+var Hour = ['6 am', '7 am', '8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm', '8 pm', 'Daily Location Total'];
+var Locations = [];
+var sum1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var mainid = document.getElementById('main');     
+var table = document.createElement('table');      
+mainid.appendChild(table);
+var DataRow = document.createElement('tr');      
+table.appendChild(DataRow);
+var emptycol = document.createElement('th');      
+emptycol.textContent = ' ';
+DataRow.appendChild(emptycol);
 
-    },
-    //to give the random value calculate by the function randomCustomPerHour
-    getRandom : function(min,max)
-    {
-     this.random=randomCustomPerHour(min,max);
-    },
-    
-    //to render hours and amount from js to unorderd list on html
-    renderTheHtml:function(){
-        const parentElement = document.getElementById('mainContent');
-        let pElement=document.createElement('p');
-        pElement.textContent='seatle';
-        parentElement.appendChild(pElement);
-        let ulElement=document.createElement('ul');
-        parentElement.appendChild(ulElement);
-        for(let i=0;i<this.hours.length;i++){
-            let liElement=document.createElement('li');
-            liElement.textContent=`${this.hours[i]} : ${this.amount[i]} cockies`;
-            ulElement.appendChild(liElement);
-
-        }
-        let liElement=document.createElement('li');
-            liElement.textContent=`Total :  ${this.totalAvg} coockies`;
-            ulElement.appendChild(liElement);
-
-
-    },
-    
-
-    
-
-
+function Cities(name, max, min, average_cookies_per_customer) {
+    this.name = name;
+    this.max = max;
+    this.min = min;
+    this.average_cookies_per_customer = average_cookies_per_customer;
+    this.random_customers_per_hour1 = [];
+    this.cookies_purchased_Hour = [];
+    Locations.push(this);
+}
+Cities.prototype.getRandomCustomerPerHours = function () {
+    for (var i = 0; i < Hour.length; i++) {
+        this.random_customers_per_hour1[i] = generateRandomNumber(this.min, this.max);
+    }
 };
-let Tokyo = {
-    min : 3 ,
-    max : 24 ,
-    random : 0 ,
-    totalAvg:0,
-    hours:['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'],
-    amount:[],
-    
-    avgCockiesPerSale : 1.2 ,
-    //to calculate the amount of every cockies per hour and saving iton amount array
-    amountCockiesPerHour:function(average,random){
-        average=this.avgCockiesPerSale;
-        for(let i=0;i<this.hours.length;i++){
-            this.getRandom(this.min,this.max);
-            random=this.random;
-            this.amount[i]= Math.ceil(average*random); 
-            this.totalAvg=this.totalAvg+this.amount[i];
-        }
-
-    },
-    //to give the random value calculate by the function randomCustomPerHour
-    getRandom : function(min,max)
-    {
-     this.random=randomCustomPerHour(min,max);
-    },
-    //to render hours and amount from js to unorderd list on html
-    renderTheHtml:function(){
-        const parentElement = document.getElementById('mainContent');
-        let pElement=document.createElement('p');
-        pElement.textContent='Tokyo';
-        parentElement.appendChild(pElement);
-        let ulElement=document.createElement('ul');
-        parentElement.appendChild(ulElement);
-        for(let i=0;i<this.hours.length;i++){
-            let liElement=document.createElement('li');
-            liElement.textContent=`${this.hours[i]} : ${this.amount[i]} cockies`;
-            ulElement.appendChild(liElement);
-
-        }
-        let liElement=document.createElement('li');
-            liElement.textContent=`Total :  ${this.totalAvg} coockies`;
-            ulElement.appendChild(liElement);
-        
-    },
-
-
+Cities.prototype.getcookies_purchased_Hour = function () {
+    var iteration = 0;
+    var sum = 0;
+    for (var i = 0; i < Hour.length - 1; i++) {
+        iteration = Math.floor(this.random_customers_per_hour1[i] * this.average_cookies_per_customer);
+        this.cookies_purchased_Hour[i] = iteration;
+        sum += iteration;
+        sum1[i] += iteration;
+    }
+    this.cookies_purchased_Hour.push(sum);
+    sum1[sum1.length - 1] += sum;
 };
-let Dubai = {
-    min : 11 ,
-    max : 38 ,
-    random : 0 ,
-    totalAvg:0,
-    hours:['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'],
-    amount:[],
-    
-    avgCockiesPerSale : 3.7 ,
-    //to calculate the amount of every cockies per hour and saving it on amount array
-    amountCockiesPerHour:function(average,random){
-        average=this.avgCockiesPerSale;
-        for(let i=0;i<this.hours.length;i++){
-            this.getRandom(this.min,this.max);
-            random=this.random;
-            this.amount[i]= Math.ceil(average*random); 
-            this.totalAvg=this.totalAvg+this.amount[i];
-        }
-
-    },
-    //to give the random value calculate by the function randomCustomPerHour
-    getRandom : function(min,max)
-    {
-     this.random=randomCustomPerHour(min,max);
-    },
-    //to render hours and amount from js to unorderd list on html
-    renderTheHtml:function(){
-        const parentElement = document.getElementById('mainContent');
-        let pElement=document.createElement('p');
-        pElement.textContent='Dubai';
-        parentElement.appendChild(pElement);
-        let ulElement=document.createElement('ul');
-        parentElement.appendChild(ulElement);
-        for(let i=0;i<this.hours.length;i++){
-            let liElement=document.createElement('li');
-            liElement.textContent=`${this.hours[i]} : ${this.amount[i]} cockies`;
-            ulElement.appendChild(liElement);
-
-        }
-        let liElement=document.createElement('li');
-            liElement.textContent=`Total :  ${this.totalAvg} coockies`;
-            ulElement.appendChild(liElement);
-
-    },
-
-
-};
-let Paris = {
-    min : 20 ,
-    max : 38 ,
-    random : 0 ,
-    totalAvg:0,
-    hours:['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'],
-    amount:[],
-    
-    avgCockiesPerSale : 2.3 ,
-    //to calculate the amount of every cockies per hour and saving iton amount array
-    amountCockiesPerHour:function(average,random){
-        average=this.avgCockiesPerSale;
-        for(let i=0;i<this.hours.length;i++){
-            this.getRandom(this.min,this.max);
-            random=this.random;
-            this.amount[i]= Math.ceil(average*random); 
-            this.totalAvg=this.totalAvg+this.amount[i];
-        }
-
-    },
-    //to give the random value calculate by the function randomCustomPerHour
-    getRandom : function(min,max)
-    {
-     this.random=randomCustomPerHour(min,max);
-    },
-    //to render hours and amount from js to unorderd list on html
-    renderTheHtml:function(){
-        const parentElement = document.getElementById('mainContent');
-        let pElement=document.createElement('p');
-        pElement.textContent='Paris';
-        parentElement.appendChild(pElement);
-        let ulElement=document.createElement('ul');
-        parentElement.appendChild(ulElement);
-        for(let i=0;i<this.hours.length;i++){
-            let liElement=document.createElement('li');
-            liElement.textContent=`${this.hours[i]} : ${this.amount[i]} cockies`;
-            ulElement.appendChild(liElement);
-
-        }
-        let liElement=document.createElement('li');
-            liElement.textContent=`Total :  ${this.totalAvg} coockies`;
-            ulElement.appendChild(liElement);
-
-    },
-
-
-};let Lima = {
-    min : 2 ,
-    max : 16 ,
-    random : 0 ,
-    totalAvg:0,
-    hours:['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'],
-    amount:[],
-    
-    avgCockiesPerSale : 4.6 ,
-    //to calculate the amount of every cockies per hour and saving iton amount array
-    amountCockiesPerHour:function(average,random){
-        average=this.avgCockiesPerSale;
-        for(let i=0;i<this.hours.length;i++){
-            this.getRandom(this.min,this.max);
-            random=this.random;
-            this.amount[i]= Math.ceil(average*random); 
-            this.totalAvg=this.totalAvg+this.amount[i];
-        }
-
-    },
-    //to give the random value calculate by the function randomCustomPerHour
-    getRandom : function(min,max)
-    {
-     this.random=randomCustomPerHour(min,max);
-    },
-    //to render hours and amount from js to unorderd list on html
-    renderTheHtml:function(){
-        const parentElement = document.getElementById('mainContent');
-        let pElement=document.createElement('p');
-        pElement.textContent='Lima';
-        parentElement.appendChild(pElement);
-        let ulElement=document.createElement('ul');
-        parentElement.appendChild(ulElement);
-        for(let i=0;i<this.hours.length;i++){
-            let liElement=document.createElement('li');
-            liElement.textContent=`${this.hours[i]} : ${this.amount[i]} cockies`;
-            ulElement.appendChild(liElement);
-
-        }
-        let liElement=document.createElement('li');
-            liElement.textContent=`Total :  ${this.totalAvg} coockies`;
-            ulElement.appendChild(liElement);
-
-    },
-
-
+var Seattle = new Cities('Seattle', 65, 23, 6.3, [], []);
+var Tokyo = new Cities('Tokyo', 24, 3, 1.2, [], []);
+var Dubai = new Cities('Dubai', 38, 11, 3.7, [], []);
+var Paris = new Cities('Paris', 38, 20, 2.3, [], []);
+var Lima = new Cities('Lima', 16, 2, 4.6, [], []);
+for (var i = 0; i < Locations.length; i++) {
+    Locations[i].getRandomCustomerPerHours();
+    Locations[i].getcookies_purchased_Hour();
+}
+function addHeader() {
+    for (var out = 0; out < OpenHour.length; out++) {
+        var ListItemLocation = document.createElement('th');
+        ListItemLocation.textContent = OpenHour[out];
+        DataRow.appendChild(ListItemLocation);
+    }
+}
+addHeader();
+Cities.prototype.render = function () {
+    DataRow = document.createElement('tr');
+    table.appendChild(DataRow);
+    var ListItemLocation = document.createElement('td');
+    ListItemLocation.textContent = this.name;  
+    DataRow.appendChild(ListItemLocation);
+    for (var j = 0; j < Hour.length - 1; j++) {
+        ListItemLocation = document.createElement('td');
+        ListItemLocation.textContent = this.cookies_purchased_Hour[j];
+        DataRow.appendChild(ListItemLocation);
+    }
+    ListItemLocation = document.createElement('td');
+    ListItemLocation.textContent = this.cookies_purchased_Hour[this.cookies_purchased_Hour.length - 1];
+    DataRow.appendChild(ListItemLocation);
 };
 
+for (var i = 0; i < Locations.length; i++) {
+    
+    console.log(Locations[i]);
+    Locations[i].render();
+}
 
-  seatle.amountCockiesPerHour(seatle.avgCockiesPerSale,seatle.getRandom(23,65));
-  console.log(seatle.random);
-  seatle.renderTheHtml();
-
-  Tokyo.amountCockiesPerHour(Tokyo.avgCockiesPerSale,Tokyo.getRandom(3,24));
-  console.log(Tokyo.random);
-  Tokyo.renderTheHtml();
-
-  Dubai.amountCockiesPerHour(Dubai.avgCockiesPerSale,Dubai.getRandom(11,38));
-  console.log(Dubai.random);
-  Dubai.renderTheHtml();
-
-  Paris.amountCockiesPerHour(Paris.avgCockiesPerSale,Paris.getRandom(20,38));
-  console.log(Paris.random);
-  Paris.renderTheHtml();
-
-  Lima.amountCockiesPerHour(Lima.avgCockiesPerSale,Lima.getRandom(3,24));
-  console.log(Lima.random);
-  Lima.renderTheHtml();
-
-
-
-
-  //to calculate the random of minimum and maximum
-function randomCustomPerHour(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); 
-  }
+function addFooter() {
+    DataRow = document.createElement('tr');
+    table.appendChild(DataRow);
+    emptycol = document.createElement('td');
+    emptycol.textContent = 'Total';
+    DataRow.appendChild(emptycol);
+    for (var tot = 0; tot < sum1.length; tot++) {
+        var TotalRow = document.createElement('td');
+        TotalRow.textContent = sum1[tot];
+        DataRow.appendChild(TotalRow);
+    }
+}
+addFooter();
+function generateRandomNumber(min, max) {
+    var random = Math.random();
+    random = (random * (max - min + 1)) + min;
+    random = Math.floor(random);
+    return random;
+}
