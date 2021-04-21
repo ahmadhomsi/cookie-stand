@@ -11,6 +11,8 @@ var emptycol = document.createElement('th');
 emptycol.textContent = ' ';
 DataRow.appendChild(emptycol);
 
+const newSales=document.getElementById('salesform')
+
 function Cities(name, max, min, average_cookies_per_customer) {
     this.name = name;
     this.max = max;
@@ -53,6 +55,18 @@ function addHeader() {
         DataRow.appendChild(ListItemLocation);
     }
 }
+function addFooter() {
+    DataRow = document.createElement('tr');
+    table.appendChild(DataRow);
+    emptycol = document.createElement('td');
+    emptycol.textContent = 'Total';
+    DataRow.appendChild(emptycol);
+    for (var tot = 0; tot < sum1.length; tot++) {
+        var TotalRow = document.createElement('td');
+        TotalRow.textContent = sum1[tot];
+        DataRow.appendChild(TotalRow);
+    }
+}
 addHeader();
 Cities.prototype.render = function () {
     DataRow = document.createElement('tr');
@@ -76,22 +90,28 @@ for (var i = 0; i < locations.length; i++) {
     locations[i].render();
 }
 
-function addFooter() {
-    DataRow = document.createElement('tr');
-    table.appendChild(DataRow);
-    emptycol = document.createElement('td');
-    emptycol.textContent = 'Total';
-    DataRow.appendChild(emptycol);
-    for (var tot = 0; tot < sum1.length; tot++) {
-        var TotalRow = document.createElement('td');
-        TotalRow.textContent = sum1[tot];
-        DataRow.appendChild(TotalRow);
-    }
-}
+
 addFooter();
 function generateRandomNumber(min, max) {
     var random = Math.random();
     random = (random * (max - min + 1)) + min;
     random = Math.floor(random);
     return random;
+}
+
+newSales.addEventListener('submit',salesAdd)
+function salesAdd(event){
+    event.preventDefault();
+    const newCity=event.target.cityname.value;
+    const newMax=event.target.maxofsale.value;
+    const newMin=event.target.minofsale.value;
+    const newAvg=event.target.avg.value;
+
+    
+    let addCity=new Cities(newCity,newMax,newMin,newAvg);
+    addCity.getRandomCustomerPerHours();
+    addCity.getcookies_purchased_Hour();
+    addCity.render();
+
+
 }
