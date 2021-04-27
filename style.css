@@ -16,3 +16,73 @@ table {
   h1 {
     width: 450px;
   }
+  
+
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #F0F8FF;
+}
+#one{
+  border-radius: 50%; /*  opera, IE9, */
+ -webkit-border-radius: 50%;  /* safari , chrome */
+  -moz-border-radius: 50%;  /* mozila */
+  float: right;
+  
+}
+#too{
+    list-style: none;
+}
+/* end global*/
+
+
+
+
+/* start header */
+
+#three {
+    background-color: #333;
+    color: #DDD;
+    padding: 20px;
+    text-align: center;
+}
+nav{
+    background-color: #DDD;
+}
+h1 {
+    padding: 20px;
+    text-align: center;
+}
+nav{
+    display: inline-block;
+    padding: 5px;
+
+
+}
+
+
+   img{
+      height: 200px;
+      padding: 5px;
+  }
+
+
+
+
+
+
+img{
+    width: 250px;
+}
+
+
+
+
+
+
+footer {
+    background-color: #333;
+    color: #DDD;
+    text-align: center;
+    padding: 10px;
+}
